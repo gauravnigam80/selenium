@@ -15,7 +15,6 @@ import com.example.reader.utils.FileUtils;
 
 public class ServiceLayer {
 
-	//private static List<Vehicle> list = new ArrayList<>();
 	private static String FOLDER_LOCATION = null;
 	private static String PROJECT_PROPERTIES = "project.properties";
 	private final static Logger logger = Logger.getLogger(ServiceLayer.class);
