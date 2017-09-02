@@ -8,9 +8,13 @@ import java.net.URL;
 import java.util.List;
 import java.util.Properties;
 
+import javax.activation.MimetypesFileTypeMap;
+
 import org.apache.log4j.Logger;
 
 import com.example.data.Vehicle;
+import com.example.reader.data.CSVReader;
+import com.example.reader.data.XLReader;
 import com.example.reader.utils.FileUtils;
 
 public class ServiceLayer {
@@ -18,7 +22,9 @@ public class ServiceLayer {
 	private static String FOLDER_LOCATION = null;
 	private static String PROJECT_PROPERTIES = "project.properties";
 	private final static Logger logger = Logger.getLogger(ServiceLayer.class);
-	
+	private FileUtils utils = null;
+	private MimetypesFileTypeMap mimeTypesMap = null;
+
 	static{
 		 Properties properties = new Properties();
 		 ClassLoader classLoader = ServiceLayer.class.getClassLoader();
@@ -35,15 +41,20 @@ public class ServiceLayer {
 	}
 	
 	
+	public ServiceLayer(FileUtils fileUtils,MimetypesFileTypeMap mimeTypesMap_p) {
+		utils = fileUtils;
+		mimeTypesMap = mimeTypesMap_p;
+	}
+
 	public static void main(String[] args) throws IOException {
-	 ServiceLayer serviceLayer = new ServiceLayer();
+	 ServiceLayer serviceLayer = new ServiceLayer(new FileUtils(new CSVReader(), new XLReader()), new MimetypesFileTypeMap());
 	 List<Vehicle> list = serviceLayer.getAllVehicleInformation();
 	}
 
-	public List<Vehicle> getAllVehicleInformation() throws IOException{
-		FileUtils utils = new FileUtils();
-		List<File> fileList  = utils.findAllFiles(FOLDER_LOCATION);
-		List<File> readableFiles = utils.filterReadableFiles(fileList);
+	public List<Vehicle> getAllVehicleInformation(){
+		File sourceDir = new File(FOLDER_LOCATION);
+		List<File> fileList  = getUtils().findAllFiles(sourceDir);
+		List<File> readableFiles = utils.filterReadableFiles(fileList,getMimeTypesMap());
 		List<Vehicle> list = utils.readFiles(readableFiles);
 		logger.debug("Vehicles found "+list);
 		return list;
@@ -51,6 +62,29 @@ public class ServiceLayer {
 	
 
 	
+	/**
+	 * @return the utils
+	 */
+	public FileUtils getUtils() {
+		return utils;
+	}
+
  
+	/**
+	 * @return the fOLDER_LOCATION
+	 */
+	public static String getFolderLocation() {
+		return FOLDER_LOCATION;
+	}
+
+	/**
+	 * @return the mimeTypesMap
+	 */
+	public MimetypesFileTypeMap getMimeTypesMap() {
+		return mimeTypesMap;
+	}
+
+
+
 }
  

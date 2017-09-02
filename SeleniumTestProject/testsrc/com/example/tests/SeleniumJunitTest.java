@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.activation.MimetypesFileTypeMap;
+
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,6 +19,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.example.data.Vehicle;
+import com.example.reader.data.CSVReader;
+import com.example.reader.data.XLReader;
+import com.example.reader.utils.FileUtils;
 import com.example.service.ServiceLayer;
 
 @RunWith(value = Parameterized.class)
@@ -43,7 +48,7 @@ public class SeleniumJunitTest extends AbstractJunitTest{
 	@Test
 	public void carRegistrationCheck() throws IOException {
 		
-		ServiceLayer serviceLayer = new ServiceLayer();
+		ServiceLayer serviceLayer = new ServiceLayer(new FileUtils(new CSVReader(), new XLReader()), new MimetypesFileTypeMap());
 		List<Vehicle> vehicles = serviceLayer.getAllVehicleInformation();
 		String expected_car_reg_number = null ;  
 		String expected_car_make = null ; 

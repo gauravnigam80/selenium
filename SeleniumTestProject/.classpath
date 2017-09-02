@@ -52,5 +52,6 @@
 	<classpathentry kind="lib" path="lib/poi-scratchpad-3.16.jar"/>
 	<classpathentry kind="lib" path="lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="lib" path="resource"/>
+	<classpathentry kind="lib" path="lib/mockito-all-1.10.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

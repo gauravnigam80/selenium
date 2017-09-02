@@ -14,12 +14,6 @@ import com.example.data.Vehicle;
 public class CSVReader {
 
 	private final static Logger logger = Logger.getLogger(CSVReader.class);
-	private final static CSVReader csvReader = new CSVReader();
-	
-	public static CSVReader getCSVReader(){
-		return csvReader;
-	}
-
 
 	public List<Vehicle> readCSV(File file) throws IOException {
 		List<Vehicle> list = new ArrayList<>();

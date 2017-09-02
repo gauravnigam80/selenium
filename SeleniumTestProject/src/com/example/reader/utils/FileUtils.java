@@ -18,10 +18,23 @@ import com.example.reader.data.XLReader;
 public class FileUtils {
 
 	private final static Logger logger = Logger.getLogger(FileUtils.class);
+	CSVReader csvReader = null;
+	XLReader xlReader = null;
+	
+	
 
-	public List<File> filterReadableFiles(List<File> fileList){
+	/**
+	 * @param csvReader
+	 * @param xlReader
+	 */
+	public FileUtils(CSVReader csvReader, XLReader xlReader) {
+		super();
+		this.csvReader = csvReader;
+		this.xlReader = xlReader;
+	}
+
+	public List<File> filterReadableFiles(List<File> fileList,MimetypesFileTypeMap mimeTypesMap){
 		List<File> list = new ArrayList<>();
-		MimetypesFileTypeMap mimeTypesMap = new MimetypesFileTypeMap();
 
 		for(File file : fileList){
 			 if(file.isDirectory()== false){
@@ -41,9 +54,8 @@ public class FileUtils {
 		 return list;
 	}
 	
-	public List<File> findAllFiles(String folderPath) throws IOException {
+	public List<File> findAllFiles(File sourceDir) {
 		List<File> list = new ArrayList<>();
-		 File sourceDir = new File(folderPath);
 		 if(!sourceDir.isDirectory()){
 			 return list;
 		 }	 
@@ -57,12 +69,16 @@ public class FileUtils {
 		 return list;
 	}
 
-	public List<Vehicle> readFiles(List<File> fileList) throws IOException {
+	public List<Vehicle> readFiles(List<File> fileList){
 		List<Vehicle> list = new ArrayList<>();
 		for(File file : fileList){
 			String fileName = file.getName();
 			String extension = FilenameUtils.getExtension(fileName);
-			list.addAll(readFile(file,extension.toUpperCase()));
+			try {
+				list.addAll(readFile(file,extension.toUpperCase()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return list;
 	}
@@ -70,8 +86,8 @@ public class FileUtils {
 	private List<Vehicle> readFile(File file, String extension) throws IOException {
 		List<Vehicle> list = null;
 		switch(FileExtensionType.valueOf(extension)){
-			case CSV : list = CSVReader.getCSVReader().readCSV(file);break;
-			case XLS : list = XLReader.getXLReader().readXLS(file); 
+			case CSV : list = csvReader.readCSV(file);break;
+			case XLS : list = xlReader.readXLS(file); 
 		}
 		return list;
 	}

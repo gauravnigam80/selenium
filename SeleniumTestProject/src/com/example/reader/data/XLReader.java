@@ -25,12 +25,6 @@ import com.example.data.Vehicle;
 public class XLReader {
 
 	private final static Logger logger = Logger.getLogger(XLReader.class);
-	private final static XLReader xlReader = new XLReader();
-	
-	public static XLReader getXLReader(){
-		return xlReader;
-	}
-	
 	
 	public List<Vehicle> readXLS(File file) throws IOException{
 		List<Vehicle> list = new ArrayList<>();		
