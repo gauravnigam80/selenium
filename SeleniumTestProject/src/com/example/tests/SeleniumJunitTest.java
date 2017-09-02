@@ -8,8 +8,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -46,7 +44,7 @@ public class SeleniumJunitTest extends AbstractJunitTest{
 	public void carRegistrationCheck() throws IOException {
 		
 		ServiceLayer serviceLayer = new ServiceLayer();
-		List<Vehicle> vehicles = serviceLayer.findDataFromFiles();
+		List<Vehicle> vehicles = serviceLayer.getAllVehicleInformation();
 		String expected_car_reg_number = null ;  
 		String expected_car_make = null ; 
 		String expected_car_color = null ; 
