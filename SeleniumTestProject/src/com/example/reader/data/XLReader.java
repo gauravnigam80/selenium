@@ -36,7 +36,7 @@ public class XLReader {
 		while (iterator.hasNext()) {
 			
 			Row currentRow = iterator.next();
-			if (true) {
+			if (currentRow.getCell(0).getStringCellValue()!=null && currentRow.getCell(0).getStringCellValue().isEmpty() == false) {
 				vehicle = new Vehicle(currentRow.getCell(0).getStringCellValue(), currentRow.getCell(1).getStringCellValue(), currentRow.getCell(2).getStringCellValue());
 				logger.debug(vehicle);
 				list.add(vehicle);
